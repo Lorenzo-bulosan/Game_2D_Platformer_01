@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// controls for player: Dango
+// controls for player movement: Dango
 public class PlayerController : MonoBehaviour
 {
     // game objects
@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     private float SpeedX = 7;
     private float SpeedY = 11;
     private float velocityX, velocityY;
+
+    public bool CanAttack { get; set; } = true;
 
     private void Awake()
     {
@@ -91,11 +93,5 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = true;
         }
-    }
-
-    public bool CanAttack()
-    {
-        //return horizontalInput == 0 && isGrounded;
-        return true;
     }
 }

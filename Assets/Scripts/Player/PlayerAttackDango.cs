@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// player attack controls
 public class PlayerAttackDango : MonoBehaviour
 {
     // ref to game obj
@@ -42,7 +43,7 @@ public class PlayerAttackDango : MonoBehaviour
     {
         leftMouseClick = Input.GetMouseButton(0);
 
-        if (leftMouseClick==true && cooldownTimer > attackCooldown && _playerController.CanAttack())
+        if (leftMouseClick==true && cooldownTimer > attackCooldown && _playerController.CanAttack)
         {
             Attack();
         }

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+// behaviour controll of each layer of parallax individually
 namespace Project.Scripts.Parallax
 {
     // Allows ParallaxController to move each layer based on parallaxAmount
