@@ -10,6 +10,13 @@ public class HealthController : MonoBehaviour
     public float CurrentHealth { get; private set; }
     public float TotalHealth { get; private set; }
 
+    // ref
+    private Animator animator;
+
+    // animation parameters
+    private string paramHurt = "hurt";
+    private string paramDeath = "death";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +24,9 @@ public class HealthController : MonoBehaviour
         startingHealth = 3;
         TotalHealth = startingHealth;
         CurrentHealth = startingHealth;
+
+        animator = GetComponent<Animator>();
+        
     }
 
     // Update is called once per frame
@@ -42,7 +52,7 @@ public class HealthController : MonoBehaviour
         // hurt
         else if (CurrentHealth > 0 && CurrentHealth < TotalHealth)
         {
-            
+            animator.SetTrigger(paramHurt);
         }
         // dead
         else if (CurrentHealth <= 0)
@@ -54,5 +64,6 @@ public class HealthController : MonoBehaviour
     public void OnPlayerDeath()
     {
 
+        animator.SetTrigger(paramDeath);
     }
 }
