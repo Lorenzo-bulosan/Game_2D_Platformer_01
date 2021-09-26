@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// player attack controls
 public class PlayerAttackDango : MonoBehaviour
 {
     // ref to game obj

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// Camera controller for Dango
+// class to control main camera
 public class CameraController : MonoBehaviour
 {
     [SerializeField]

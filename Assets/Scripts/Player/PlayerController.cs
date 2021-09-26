@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// controls for player: Dango
+// controls for player movement: Dango
 public class PlayerController : MonoBehaviour
 {
     // game objects

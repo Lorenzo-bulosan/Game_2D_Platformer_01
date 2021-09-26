@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// behaviour controll of each layer of parallax individually
 public class ParallaxEffect : MonoBehaviour
 {
     // variablles

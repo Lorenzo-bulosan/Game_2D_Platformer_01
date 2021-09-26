@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+// controller for parent game object containing each sprite for parallax layers
 namespace Project.Scripts.Parallax
 {
     // Finds all game objects that have ParallaxLayer and moves them
