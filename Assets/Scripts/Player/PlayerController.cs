@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     private float SpeedY = 11;
     private float velocityX, velocityY;
 
+    public bool CanAttack { get; set; } = true;
+
     private void Awake()
     {
         // set instances
@@ -91,11 +93,5 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = true;
         }
-    }
-
-    public bool CanAttack()
-    {
-        //return horizontalInput == 0 && isGrounded;
-        return true;
     }
 }

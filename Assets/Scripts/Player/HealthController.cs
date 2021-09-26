@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class HealthController : MonoBehaviour
 {
+    // ref
+    private Animator animator;
 
     [SerializeField]
-    private float startingHealth;
+    private float startingHealth = 3;
     public float CurrentHealth { get; private set; }
     public float TotalHealth { get; private set; }
 
-    // ref
-    private Animator animator;
+    // sprite image contains 10 hearts
+    private float spriteMaxImage = 10;
+
 
     // animation parameters
     private string paramHurt = "hurt";
@@ -20,8 +23,7 @@ public class HealthController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // initial parameterss
-        startingHealth = 3;
+        // initial parameters
         TotalHealth = startingHealth;
         CurrentHealth = startingHealth;
 
@@ -35,6 +37,11 @@ public class HealthController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             DecreaseHealth(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            IncreaseHealth(1);
         }
     }
 
@@ -61,9 +68,24 @@ public class HealthController : MonoBehaviour
         }
     }
 
+    public void IncreaseHealth(float acquiredHealth)
+    {
+        // clip on max out
+        if (CurrentHealth == spriteMaxImage) return;
+
+        // if full increase total and current
+        if (CurrentHealth == TotalHealth)
+        {
+            TotalHealth += acquiredHealth;
+        }
+
+        CurrentHealth += acquiredHealth;
+    }
+
     public void OnPlayerDeath()
     {
-
         animator.SetTrigger(paramDeath);
+        GetComponent<PlayerController>().enabled = false;
+        GetComponent<PlayerController>().CanAttack = false;
     }
 }
