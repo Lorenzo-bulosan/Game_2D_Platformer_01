@@ -5,8 +5,6 @@ using UnityEngine;
 // controls for player: Dango
 public class PlayerController : MonoBehaviour
 {
-    // scene
-
     // game objects
     private Rigidbody2D _body;
     private string tagGround = "Ground";
@@ -23,7 +21,7 @@ public class PlayerController : MonoBehaviour
     private bool isJumping;
     private float horizontalInput;
 
-    // speed/velocity
+    // player variables
     [SerializeField]
     private float SpeedX = 7;
     private float SpeedY = 11;
@@ -31,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        // set instances
         _body = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
     }
