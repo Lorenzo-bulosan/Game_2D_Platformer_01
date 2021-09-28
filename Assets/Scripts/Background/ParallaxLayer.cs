@@ -7,53 +7,64 @@ namespace Project.Scripts.Parallax
     // Allows ParallaxController to move each layer based on parallaxAmount
     public class ParallaxLayer : MonoBehaviour
     {
-        [Range(-1f, 1f)]
-        [SerializeField]
-        [Tooltip("Amount of parallax. 1 simulates being close to the camera, -1 simulates being very far from the camera.")]
-        private float parallaxAmount;
+        //    [Range(-1f, 1f)]
+        //    [SerializeField]
+        //    [Tooltip("Amount of parallax. 1 simulates being close to the camera, -1 simulates being very far from the camera.")]
+        //    private float parallaxAmount;
 
-        [NonSerialized] private Vector3 newPosition;
+        //    [NonSerialized] private Vector3 newPosition;
 
-        private float lengthOfLayer;
+        // variablles
+        private float lengthBackgroundOneSet, startPos, distance, deltaLength;
 
-        [SerializeField]
-        private Camera cameraObj;
+        // ref
+        public GameObject _camera;
+        public float parallaxEffect;
 
         private void Awake()
         {
-            cameraObj = GetComponent<Camera>();
-            
+            startPos = transform.position.x;
+            lengthBackgroundOneSet = GetComponent<SpriteRenderer>().bounds.size.x;
         }
 
-        public void MoveLayer(float positionChangeX, float positionChangeY)
+        private void Update()
         {
-            var transform1 = transform;
-            newPosition = transform1.localPosition;
-            newPosition.x -= positionChangeX * (-parallaxAmount * 30) * (Time.deltaTime);
-            newPosition.y -= positionChangeY * (-parallaxAmount * 20) * (Time.deltaTime);
-            transform1.localPosition = newPosition;
+            // move layer faster or camera follow depending on external user input variable
+            //MoveLayerByParallaxAmount();
 
-            // IMPLEMENT INFINITE SCROLLING
-           // InfiniteScrollingHorizontal();
+            // infinite scrolling, as front layers will move faster than further ones
+            InfiniteScrollingHorizontal();
+        }              
+        
+        private void MoveLayerByParallaxAmount()
+        {
+            // calculates parallax and move by that much each layer depending on variable given to each
+            distance = (_camera.transform.position.x * parallaxEffect);
+            transform.position = new Vector3(startPos + distance, transform.position.y, transform.position.z);
         }
 
         private void InfiniteScrollingHorizontal()
         {
-            // get layer position of edges x0 and x1
-            var camerax0 = cameraObj.transform.position.x;
-            var camerax1 = cameraObj.orthographicSize*2f;
-
-            // get camera position of edges too c0 and c1
-
-            // when the camera edge c1 reaches x1 then move layer to start at x1, and inverse
-
-            // test move layer
-            var transform2 = transform;
-            newPosition = transform2.localPosition;
-            newPosition.x -= 0.02f;
-            transform2.localPosition = newPosition;
-
-            Console.WriteLine(newPosition);
+            // fix on some layers ending first because as per parallax the front ones will move faster
+            deltaLength = (_camera.transform.position.x * (1 - parallaxEffect));
+            if (deltaLength > startPos + lengthBackgroundOneSet)
+            {
+                startPos += lengthBackgroundOneSet; // move origin position by that much
+            }
+            else if (deltaLength < startPos + lengthBackgroundOneSet)
+            {
+                startPos -= lengthBackgroundOneSet;
+            }
         }
+
+        // jimmy's  parallax implementation but needs controller in parent objects
+        //public void MoveLayer(float positionChangeX, float positionChangeY)
+        //{
+        //    var transform1 = transform;
+        //    newPosition = transform1.localPosition;
+        //    newPosition.x -= positionChangeX * (Time.deltaTime);
+        //    newPosition.y -= positionChangeY * (Time.deltaTime);
+        //    transform1.localPosition = newPosition;
+        //}
     }
 }
