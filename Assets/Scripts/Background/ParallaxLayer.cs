@@ -34,7 +34,7 @@ namespace Project.Scripts.Parallax
             transform1.localPosition = newPosition;
 
             // IMPLEMENT INFINITE SCROLLING
-            InfiniteScrollingHorizontal();
+           // InfiniteScrollingHorizontal();
         }
 
         private void InfiniteScrollingHorizontal()
