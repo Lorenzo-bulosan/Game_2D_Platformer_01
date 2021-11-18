@@ -2,38 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// controls for player movement: Dango
+// controls for player movement
 public class PlayerController : MonoBehaviour
 {
     // game objects
-    private Rigidbody2D _body;
-    private string tagGround = "Ground";
+    private Rigidbody2D body;
+
+    private const string TAG_GROUND = "Ground";
 
     // animation parameters
-    private Animator _animator;
-    private string paramWalking = "walking";
-    private string paramGrounded = "grounded";
-    private string paramJump = "jump";
+    private Animator animator;
+    private static readonly int Jump = Animator.StringToHash("jump");
+    private static readonly int Walking = Animator.StringToHash("grounded");
+    private static readonly int Grounded = Animator.StringToHash("walking");
     private bool isWalking;
     private bool isGrounded;
-
+    
     // inputs
     private bool isJumping;
     private float horizontalInput;
 
+
     // player variables
+
     [SerializeField]
-    private float SpeedX = 7;
-    private float SpeedY = 11;
-    private float velocityX, velocityY;
+    private float speedX = 7;
+
+    private const float SPEED_Y = 11;
+    private float velocityX;
 
     public bool CanAttack { get; set; } = true;
 
     private void Awake()
     {
         // set instances
-        _body = GetComponent<Rigidbody2D>();
-        _animator = GetComponent<Animator>();
+        body = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // on every frame
@@ -43,14 +47,13 @@ public class PlayerController : MonoBehaviour
         DetectJump();
         DetectFlip();
         EnableAnimations();
-
     }
 
     private void DetectHorizonalMovement()
     {
         horizontalInput = Input.GetAxis("Horizontal");
-        velocityX = horizontalInput * SpeedX;
-        _body.velocity = new Vector2(velocityX, _body.velocity.y); // speed in all 2 directions
+        velocityX = horizontalInput * speedX;
+        body.velocity = new Vector2(velocityX, body.velocity.y); // speed in all 2 directions
     }
 
     private void DetectJump() 
@@ -59,9 +62,9 @@ public class PlayerController : MonoBehaviour
 
         if (isJumping && isGrounded)
         {
-            _body.velocity = new Vector2(_body.velocity.x, SpeedY);
+            body.velocity = new Vector2(body.velocity.x, SPEED_Y);
             isGrounded = false;
-            _animator.SetTrigger(paramJump);
+            animator.SetTrigger(Jump);
         }
     }
 
@@ -81,15 +84,15 @@ public class PlayerController : MonoBehaviour
     private void EnableAnimations()
     {
         isWalking = horizontalInput != 0;
-        _animator.SetBool(paramWalking, isWalking);
-        _animator.SetBool(paramGrounded, isGrounded);
+        animator.SetBool(Walking, isWalking);
+        animator.SetBool(Grounded, isGrounded);
     }
 
     // detects collisions between colidable bodies
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // check if collision object has tag ground that we gave to the ground game obj
-        if(collision.gameObject.tag == tagGround)
+        if(collision.gameObject.CompareTag(TAG_GROUND))
         {
             isGrounded = true;
         }
